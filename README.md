@@ -1,4 +1,4 @@
-Project Setup
+**Project Setup**
 
 1. This is project called "DEVICE MANAGEMENT DASHBOARD" that is based on React.js for Frontend and Node.js + Express.js for Backend.
 2. Data is fetched from http://localhost:5000/devices API and displayed in dashboard in a table format.
@@ -8,7 +8,7 @@ Project Setup
 6. "Update APN" is enabled only for devices with status as "active". On clicking update APN the API call is made to update the APN and a message is displayed accordingly.
 7. On clicking "Close" button the side panel closes.
 
-Prerequisites
+**Prerequisites**
 
 --> Before running the app, ensure you have the following installed:
 
@@ -18,7 +18,7 @@ Prerequisites
 
 3. A running backend API at http://localhost:5000/devices or update the API_URL in the code if running on any other port. By default 5000 has been setup as port number for backend.
 
-Running the app locally
+**Running the app locally**
 
 1. Clone the repository https://github.com/rishabh-sharma4/device-management-dashboard.git
 
