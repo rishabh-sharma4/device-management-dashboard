@@ -33,5 +33,14 @@ app.get("/devices/:id", (req, res) => {
   res.json(device);
 });
 
+// Update APN (Mock)
+app.post("/devices/:id/actions/update-apn", (req, res) => {
+  const device = devices.find(d => d.id === req.params.id);
+  if (!device) return res.status(404).json({ error: "Device not found" });
+  if (device.status === "Inactive") return res.status(400).json({ error: "Cannot update APN for inactive device" });
+
+  res.json({ success: true, message: "APN updated successfully" });
+});
+
 // Start server
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
