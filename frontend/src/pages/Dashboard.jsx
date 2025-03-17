@@ -22,20 +22,31 @@ function Dashboard() {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>{error}</p>;
 
-  const filteredDevices = filter === "All" ? devices : devices.filter(d => d.status === filter);
+  const filteredDevices =
+    filter === "All" ? devices : devices.filter((d) => d.status === filter);
 
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Device Management Dashboard</h1>
-      <label className={styles.filterLabel}>
+      <label htmlFor="deviceFilter" className={styles.filterLabel}>
         Filter by Status:
-        <select value={filter} onChange={(e) => setFilter(e.target.value)} className={styles.selectBox}>
+        <select
+          id="deviceFilter"
+          aria-label="Filter your devices by their status"
+          value={filter}
+          onChange={(e) => setFilter(e.target.value)}
+          className={styles.selectBox}
+        >
           <option value="All">All</option>
           <option value="Active">Active</option>
           <option value="Inactive">Inactive</option>
         </select>
       </label>
-      <table className={styles.table} role="table" aria-label="Device Management Table">
+      <table
+        className={styles.table}
+        role="table"
+        aria-label="Device Management Table"
+      >
         <thead>
           <tr>
             <th scope="col">Device Name</th>
@@ -46,29 +57,67 @@ function Dashboard() {
         </thead>
         <tbody>
           {filteredDevices.map((device) => (
-            <tr key={device.id} className={styles.tableRow} onClick={() => setSelectedDevice(device)} tabIndex="0">
+            <tr
+              key={device.id}
+              className={styles.tableRow}
+              onClick={() => setSelectedDevice(device)}
+              tabIndex="0"
+              onKeyDown={(e) =>
+                (e.key === "Enter" || e.key === "") && setSelectedDevice(device)
+              }
+              role="button"
+              aria-label={`View details for: ${device.name}`}
+            >
               <td className={styles.deviceName}>{device.name}</td>
-              <td className={device.status === "Active" ? styles.statusActive : styles.statusInactive}>{device.status}</td>
-              <td className={styles.telemetrySource}>{device.telemetrySource}</td>
-              <td className={styles.lastCommunication}>{new Date(device.lastCommunication).toLocaleString()}</td>
+              <td
+                className={
+                  device.status === "Active"
+                    ? styles.statusActive
+                    : styles.statusInactive
+                }
+              >
+                {device.status}
+              </td>
+              <td className={styles.telemetrySource}>
+                {device.telemetrySource}
+              </td>
+              <td className={styles.lastCommunication}>
+                {new Date(device.lastCommunication).toLocaleString()}
+              </td>
             </tr>
           ))}
         </tbody>
       </table>
       {selectedDevice && (
-        <div className={styles.drawer}>
-          <h2>{selectedDevice.name} Details</h2>
-          <p>{selectedDevice.id}</p>
-          <p>{selectedDevice.model}</p>
-          <p>{selectedDevice.dataSource}</p>
+        <div className={styles.drawer} role="dialog" aria-labelledBy="deviceDetailsTitle">
+          <h2 id="deviceDetailsTitle">{selectedDevice.name} Details</h2>
+          <p><strong>Device ID:</strong> {selectedDevice.id}</p>
+          <p><strong>Model:</strong> {selectedDevice.model}</p>
+          <p><strong>Data Source:</strong> {selectedDevice.dataSource}</p>
           <button
-            className={selectedDevice.status === "Inactive" ? styles.buttonDisabled : styles.button}
+            className={
+              selectedDevice.status === "Inactive"
+                ? styles.buttonDisabled
+                : styles.button
+            }
             disabled={selectedDevice.status === "Inactive"}
-            onClick={() => axios.post(`${API_URL}/${selectedDevice.id}/actions/update-apn`).then(alert("APN Updated"))}
+            aria-disabled={selectedDevice.status === "Inactive"}
+            aria-label={`Update APN for ${selectedDevice.name}`}
+            onClick={() =>
+              axios
+                .post(`${API_URL}/${selectedDevice.id}/actions/update-apn`)
+                .then(alert("APN Updated"))
+            }
           >
             Update APN
           </button>
-          <button className={styles.button} onClick={() => setSelectedDevice(null)}>Close</button>
+          <button
+            className={styles.button}
+            onClick={() => setSelectedDevice(null)}
+            aria-label="Close device details panel"
+          >
+            Close
+          </button>
         </div>
       )}
     </div>

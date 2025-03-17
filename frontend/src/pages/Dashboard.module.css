@@ -61,3 +61,66 @@
     cursor: pointer;
 }
 
+.drawer {
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 300px;
+    height: 100%;
+    background: white;
+    box-shadow: -2px 0px 5px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+}
+
+.drawer h2 {
+    margin-top: 0;
+    color: #007bff
+}
+
+.drawer p {
+    font-size: 16px;
+    margin: 5px 0;
+}
+
+.button {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    margin: 5px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.button:hover {
+    background: #0056b3
+}
+
+.buttonDisabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.statusActive {
+    color: green;
+    font-weight: bold;
+}
+
+.statusInactive {
+    color: red;
+    font-weight: bold;
+}
+
+.deviceName {
+    color: #007bff;
+    font-weight: bold;
+}
+
+.telemetrySource {
+    color: #6f42c1;
+    font-style: italic;
+}
+
+.lastCommunication {
+    color: #555;
+}
