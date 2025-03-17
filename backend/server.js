@@ -26,5 +26,12 @@ app.get("/devices", (req, res) => {
   res.json(devices);
 });
 
+// Get device details by ID
+app.get("/devices/:id", (req, res) => {
+  const device = devices.find(d => d.id === req.params.id);
+  if (!device) return res.status(404).json({ error: "Device not found" });
+  res.json(device);
+});
+
 // Start server
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
