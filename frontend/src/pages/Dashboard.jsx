@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import Spinner from "../../components/Spinner";
+import Error from "../../components/Error";
 import styles from "./Dashboard.module.css";
 
 const API_URL = "http://localhost:5000/devices";
@@ -19,8 +21,8 @@ function Dashboard() {
       .finally(() => setLoading(false));
   }, []);
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>{error}</p>;
+  if (loading) return <Spinner />;
+  if (error) return <Error message={error} />;
 
   const filteredDevices =
     filter === "All" ? devices : devices.filter((d) => d.status === filter);
